@@ -1,4 +1,4 @@
-Console.log("H");
+console.log("H");
 let canvas = document.getElementById("gameScreen");
 //Context of the canvas
 let ctx = canvas.getContext("2d");
@@ -31,7 +31,10 @@ class Player {
         if (this.position.y + this.height + this.velocity.y <= canvas.height) {
             this.velocity.y += gravity;
         }
-        else { this.velocity = 0; }
+        else {
+            console.log("Else");
+            this.velocity.y = 0;
+        }
     }
 
 }
