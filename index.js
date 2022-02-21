@@ -1,4 +1,3 @@
-console.log("H");
 let canvas = document.getElementById("gameScreen");
 //Context of the canvas
 let ctx = canvas.getContext("2d");
@@ -26,13 +25,13 @@ class Player {
 
     updateInfo() {
         this.drawPlayer();
+        this.position.x = this.velocity.x;
         this.position.y += this.velocity.y;
         // this.position.y + this.height = the bottom of the players sprite
         if (this.position.y + this.height + this.velocity.y <= canvas.height) {
             this.velocity.y += gravity;
         }
         else {
-            console.log("Else");
             this.velocity.y = 0;
         }
     }
@@ -41,7 +40,14 @@ class Player {
 
 // Creates new player object
 const player = new Player();
-player.drawPlayer();
+const keys = {
+    right: {
+        pressed: false
+    },
+    left: {
+        pressed: false
+    },
+}
 
 function animate() {
     requestAnimationFrame(animate);
@@ -50,3 +56,41 @@ function animate() {
 }
 
 animate();
+
+// W = 87, A = 65, D = 68
+window.addEventListener('keydown', ({ keyCode }) => {
+    switch (keyCode) {
+        case 65:
+            console.log('left');
+            keys.left.pressed = true;
+            player.velocity.x -= 20;
+            break;
+        case 87:
+            console.log('up');
+            // Moves the player up along the y axis
+            player.velocity.y -= 20;
+            break;
+        case 68:
+            console.log('right');
+            keys.right.pressed = true;
+            player.velocity.x += 20;
+            break;
+    }
+})
+
+window.addEventListener('keyup', ({ keyCode }) => {
+    switch (keyCode) {
+        case 65:
+            console.log('left');
+            keys.left.pressed = false;
+            break;
+        case 87:
+            console.log('up');
+            // Moves the player up along the y axis
+            break;
+        case 68:
+            console.log('right');
+            keys.right.pressed = false;
+            break;
+    }
+})
