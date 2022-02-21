@@ -1,3 +1,7 @@
+const img = new Image();
+img.src = 'img/platform.png';
+console.log(img);
+
 let canvas = document.getElementById("gameScreen");
 //Context of the canvas
 let ctx = canvas.getContext("2d");
@@ -46,30 +50,28 @@ class Player {
 
 
 class Platform {
-    constructor() {
+    constructor({ x, y }) {
         this.position = {
-            x: 200,
-            y: 500
+            x,
+            y
         }
-        this.width = 200;
-        this.height = 20;
+        this.width = 348;
+        this.height = 80;
     }
 
     draw() {
-        ctx.fillStyle = 'blue';
-        ctx.fillRect(this.position.x, this.position.y, this.width, this.height);
+        console.log("draw");
+        ctx.drawImage(img, this.position.x, this.position.y);
     }
 
 }
 
-
-
-
-
 // Creates new player object
 const player = new Player();
 // Creates new platform object
-const platform = new Platform();
+const platform1 = new Platform({x: 200, y: 500})
+const platform2 = new Platform({x: 50, y: 50})
+
 
 const keys = {
     right: {
@@ -84,7 +86,8 @@ function animate() {
     requestAnimationFrame(animate);
     ctx.clearRect(0, 0, canvas.width, canvas.height);
     player.updateInfo();
-    platform.draw();
+    platform1.draw();
+    platform2.draw();
 
     if (keys.right.pressed) {
         player.velocity.x = 5;
@@ -93,11 +96,20 @@ function animate() {
         player.velocity.x = -5;
     }
     else { player.velocity.x = 0; }
-    // Collision detection against platform
-    if (player.position.y + player.height <= platform.position.y && player.position.y + player.height + player.velocity.y >= platform.position.y && player.position.x + player.width >= platform.position.x && player.position.x <= platform.position.x + platform.width) {
+    // Collision detection against platform1
+    if (player.position.y + player.height <= platform1.position.y &&
+        player.position.y + player.height + player.velocity.y >= platform1.position.y &&
+        player.position.x + player.width >= platform1.position.x &&
+        player.position.x <= platform1.position.x + platform1.width) {
         player.velocity.y = 0;
     }
 
+    if (player.position.y + player.height <= platform2.position.y &&
+        player.position.y + player.height + player.velocity.y >= platform2.position.y &&
+        player.position.x + player.width >= platform2.position.x &&
+        player.position.x <= platform2.position.x + platform2.width) {
+        player.velocity.y = 0;
+    }
 
 }
 
