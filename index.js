@@ -3,6 +3,9 @@ let canvas = document.getElementById("gameScreen");
 let ctx = canvas.getContext("2d");
 ctx.clearRect(0, 0, canvas.width, canvas.height);
 
+// Hide scrollbar
+document.body.style.overflow = 'hidden';
+
 // Sets the dimensions of the gameScreen
 canvas.width = window.innerWidth;
 canvas.height = window.innerHeight;
@@ -15,7 +18,10 @@ class Player {
         this.position = { x: 100, y: 100 };
         this.width = 30;
         this.height = 30;
-        this.velocity = { x: 0, y: 1 };
+        this.velocity = { 
+            x: 0, 
+            y: 1 
+        }
     }
 
     drawPlayer() {
@@ -25,7 +31,7 @@ class Player {
 
     updateInfo() {
         this.drawPlayer();
-        this.position.x = this.velocity.x;
+        this.position.x += this.velocity.x;
         this.position.y += this.velocity.y;
         // this.position.y + this.height = the bottom of the players sprite
         if (this.position.y + this.height + this.velocity.y <= canvas.height) {
@@ -53,17 +59,24 @@ function animate() {
     requestAnimationFrame(animate);
     ctx.clearRect(0, 0, canvas.width, canvas.height);
     player.updateInfo();
-}
+
+    if (keys.right.pressed) {
+        player.velocity.x = 5;
+    } 
+    else if (keys.left.pressed) {
+        player.velocity.x = -5;
+    }
+    else {player.velocity.x = 0;}
+    }
 
 animate();
 
-// W = 87, A = 65, D = 68
+
 window.addEventListener('keydown', ({ keyCode }) => {
     switch (keyCode) {
         case 65:
             console.log('left');
             keys.left.pressed = true;
-            player.velocity.x -= 20;
             break;
         case 87:
             console.log('up');
@@ -73,9 +86,9 @@ window.addEventListener('keydown', ({ keyCode }) => {
         case 68:
             console.log('right');
             keys.right.pressed = true;
-            player.velocity.x += 20;
             break;
     }
+
 })
 
 window.addEventListener('keyup', ({ keyCode }) => {
@@ -86,11 +99,11 @@ window.addEventListener('keyup', ({ keyCode }) => {
             break;
         case 87:
             console.log('up');
-            // Moves the player up along the y axis
             break;
         case 68:
             console.log('right');
             keys.right.pressed = false;
             break;
     }
+
 })
