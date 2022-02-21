@@ -1,3 +1,6 @@
+import platformPNG from './img/platform.png'
+console.log(platformPNG);
+
 let canvas = document.getElementById("gameScreen");
 //Context of the canvas
 let ctx = canvas.getContext("2d");
