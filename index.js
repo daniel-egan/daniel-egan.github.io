@@ -1,3 +1,4 @@
+Console.log("H");
 let canvas = document.getElementById("gameScreen");
 //Context of the canvas
 let ctx = canvas.getContext("2d");
@@ -6,6 +7,9 @@ ctx.clearRect(0, 0, canvas.width, canvas.height);
 // Sets the dimensions of the gameScreen
 canvas.width = window.innerWidth;
 canvas.height = window.innerHeight;
+
+// Create global gravity
+const gravity = 0.5
 
 class Player {
     constructor() {
@@ -23,6 +27,11 @@ class Player {
     updateInfo() {
         this.drawPlayer();
         this.position.y += this.velocity.y;
+        // this.position.y + this.height = the bottom of the players sprite
+        if (this.position.y + this.height + this.velocity.y <= canvas.height) {
+            this.velocity.y += gravity;
+        }
+        else { this.velocity = 0; }
     }
 
 }
@@ -33,7 +42,7 @@ player.drawPlayer();
 
 function animate() {
     requestAnimationFrame(animate);
-    ctx.clearRect(0,0,canvas.width,canvas.height);
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
     player.updateInfo();
 }
 
