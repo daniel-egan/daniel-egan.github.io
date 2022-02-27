@@ -67,13 +67,13 @@ class Platform {
 // Creates new player object
 const player = new Player();
 // Creates the floor objects
-const floor1 = new Platform({x: -32,y: canvas.height - 40})
-const floor2 = new Platform({ x: 280, y: canvas.height - 40})
-const floor3 = new Platform({ x: 590, y: canvas.height - 40})
-const floor4 = new Platform({ x: 900, y: canvas.height - 40})
+const floor1 = new Platform({ x: -32, y: canvas.height - 40 })
+const floor2 = new Platform({ x: 280, y: canvas.height - 40 })
+const floor3 = new Platform({ x: 590, y: canvas.height - 40 })
+const floor4 = new Platform({ x: 900, y: canvas.height - 40 })
 // Create center platform object
-const platform1 = new Platform({ x: canvas.width / 2, y: canvas.height / 2})
-const platform2 = new Platform({ x: canvas.width / 2 - 310, y: canvas.height / 2})
+const platform1 = new Platform({ x: canvas.width / 2, y: canvas.height / 2 })
+const platform2 = new Platform({ x: canvas.width / 2 - 310, y: canvas.height / 2 })
 
 
 const keys = {
@@ -103,7 +103,7 @@ function animate() {
         player.velocity.x = -5;
     }
     else { player.velocity.x = 0; }
-    
+
     collisionDetection();
 
 }
@@ -118,7 +118,9 @@ window.addEventListener('keydown', ({ keyCode }) => {
             break;
         case 87:
             // Moves the player up along the y axis
-            player.velocity.y -= 20;
+            if (player.velocity.y == 0) {
+                player.velocity.y -= 20;
+            }
             break;
         case 68:
             keys.right.pressed = true;
