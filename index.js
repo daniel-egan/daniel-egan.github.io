@@ -87,8 +87,8 @@ const keys = {
 
 
 
-function animate() {
-    requestAnimationFrame(animate);
+function animateMainScreen() {
+    requestAnimationFrame(animateMainScreen);
     ctx.fillStyle = 'white';
     ctx.fillRect(0, 0, canvas.width, canvas.height);
     drawFloor();
@@ -108,7 +108,7 @@ function animate() {
 
 }
 
-animate();
+animateMainScreen();
 
 
 window.addEventListener('keydown', ({ keyCode }) => {
