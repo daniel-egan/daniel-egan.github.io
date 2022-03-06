@@ -18,7 +18,8 @@ const gravity = 0.82;
 
 class Player {
     constructor() {
-        this.position = { x: 100, y: 100 };
+        this.position = { x: 495 , y: 200 };
+        
         this.width = 30;
         this.height = 30;
         this.velocity = {
@@ -74,6 +75,10 @@ const floor4 = new Platform({ x: 900, y: canvas.height - 40 })
 // Create center platform object
 const platform1 = new Platform({ x: canvas.width / 2, y: canvas.height / 2 })
 const platform2 = new Platform({ x: canvas.width / 2 - 310, y: canvas.height / 2 })
+// Create left platform object
+const platformLeft = new Platform({ x: -150, y: 150})
+// Create right platform object
+const platformRight = new Platform({ x: 850, y: 150})
 
 
 const keys = {
@@ -92,8 +97,10 @@ function animateMainScreen() {
     ctx.fillStyle = 'white';
     ctx.fillRect(0, 0, canvas.width, canvas.height);
     drawFloor();
-    platform1.draw();
-    platform2.draw();
+    drawCenterPlatform();
+    drawUpperPlatform();
+    writeTextMainMenu();
+
     player.updateInfo();
 
     if (keys.right.pressed) {
@@ -142,6 +149,25 @@ window.addEventListener('keyup', ({ keyCode }) => {
     }
 
 })
+function writeTextMainMenu() {
+    ctx.font = "30px Comic Sans MS";
+    ctx.fillStyle = "red";
+    ctx.fillText("My CV", 50, 100);
+    ctx.fillText("My GitHub", 850, 100);
+    ctx.fillText("About Me", 50, 500);
+    ctx.fillText("My LinkedIn", 825, 500);
+}
+
+function drawUpperPlatform() {
+    platformLeft.draw();
+    platformRight.draw();
+}
+
+function drawCenterPlatform() {
+    platform1.draw();
+    platform2.draw();
+}
+
 function collisionDetection() {
 
     // Collision detection against floor1
@@ -184,6 +210,18 @@ function collisionDetection() {
         player.position.y + player.height + player.velocity.y >= platform2.position.y &&
         player.position.x + player.width >= platform2.position.x &&
         player.position.x <= platform2.position.x + platform2.width) {
+        player.velocity.y = 0;
+    }
+    if (player.position.y + player.height <= platformLeft.position.y &&
+        player.position.y + player.height + player.velocity.y >= platformLeft.position.y &&
+        player.position.x + player.width >= platformLeft.position.x &&
+        player.position.x <= platformLeft.position.x + platformLeft.width) {
+        player.velocity.y = 0;
+    }
+    if (player.position.y + player.height <= platformRight.position.y &&
+        player.position.y + player.height + player.velocity.y >= platformRight.position.y &&
+        player.position.x + player.width >= platformRight.position.x &&
+        player.position.x <= platformRight.position.x + platformRight.width) {
         player.velocity.y = 0;
     }
 }
